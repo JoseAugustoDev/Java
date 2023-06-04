@@ -293,11 +293,11 @@ public class LetraGrande {
     }
 
     public static String[] letraB(String[] b) {
-        b[0] = "BBBBB  ";
-        b[1] = "BB  BB ";
-        b[2] = "BBBB   ";
-        b[3] = "BB  BB ";
-        b[4] = "BBBBB  ";
+        b[0] = "BBBBBB  ";
+        b[1] = "BB  BBB ";
+        b[2] = "BBBBB   ";
+        b[3] = "BB  BBB ";
+        b[4] = "BBBBBB  ";
 
         return b;
     }
