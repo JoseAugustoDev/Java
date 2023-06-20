@@ -1,0 +1,159 @@
+import java.util.Scanner;
+
+public class mmcEmdc {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+    
+        System.out.println("Quantos números deseja utilizar? ");
+        int quantidadeNumeros = in.nextInt();
+        
+        int[] numeros = new int[quantidadeNumeros];
+
+        preencherVetor(in, numeros);
+
+        int numeroPrimo = proxPrimo(numeros, 1);
+
+        divideAlgumNum(numeros, numeroPrimo);
+
+        dividir(numeros, numeroPrimo);
+
+        in.close();
+
+    }
+
+    public static boolean ehPrimo(int[] numeros, int primoAtual) {
+        
+        boolean ehPrimo = true;
+
+        for (int i = 2; i < primoAtual; i++) {
+            if (primoAtual%i == 0) {
+                ehPrimo = false;
+                break;
+            }
+
+        }
+
+        if (ehPrimo) {
+            divideAlgumNum(numeros, primoAtual);
+        }
+
+        return ehPrimo;
+    }
+
+    public static int proxPrimo(int[] numeros, int primoAtual) {
+        primoAtual++;
+
+        return primoAtual;
+    }
+    
+    public static boolean divideAlgumNum(int[] numeros, int divisorPrimo) {
+
+        boolean divideAlgum = false;
+
+        for (int i = 0; i < numeros.length; i++) {
+            
+            for (int j = 0; j < numeros.length; j++) {
+                if (numeros[i]%divisorPrimo == 0) {
+                    divideAlgum = true;
+                }
+            }
+        }
+
+        return divideAlgum;
+    }
+
+    public static int[] preencherVetor(Scanner in, int numeros[]) {
+
+        for (int i = 0; i < numeros.length; i++) {
+            System.out.println("Digite um número: ");
+            numeros[i] = in.nextInt();
+        }
+
+        return numeros;
+    }
+
+
+    public static int[] dividir(int[] numeros, int numeroPrimo) { 
+        
+        int proxPrimo = proxPrimo(numeros, numeroPrimo);
+
+        int resultado = 1;
+
+        while (divideAlgumNum(numeros, numeroPrimo)) {
+            
+            mostrarResultados(numeros, numeroPrimo);
+            
+            for (int i = 0; i < numeros.length; i++) {
+                
+                if(numeros[i]%numeroPrimo == 0) {
+                    numeros[i] = numeros[i] / numeroPrimo;
+                }   
+            }
+
+            resultado = resultado * numeroPrimo;
+
+        }
+        
+        while (!divideAlgumNum(numeros, numeroPrimo)) {
+
+            if (divideAlgumNum(numeros, proxPrimo) && !tudoUm(numeros) && ehPrimo(numeros, numeroPrimo)) {
+                
+                mostrarResultados(numeros, proxPrimo);
+                
+                for (int i = 0; i < numeros.length; i++) {
+                    
+                    if (numeros[i]%proxPrimo == 0) {
+                        numeros[i] = numeros[i] / proxPrimo;
+                    }
+                    
+                }
+
+                resultado = resultado * proxPrimo;
+                
+            } else {
+                proxPrimo = proxPrimo(numeros, proxPrimo);
+            }
+            
+            if(tudoUm(numeros)) {
+                mostrarResultados(numeros, resultado);
+
+                break;
+            }              
+
+        }
+        
+        return numeros;
+    }
+
+    public static void mostrarResultados(int[] numeros, int resultados) {
+
+        if(!tudoUm(numeros)) {
+            for (int i = 0; i < numeros.length; i++) {
+                System.out.print(numeros[i] + "  " );
+            }
+            
+            System.out.println("| " + resultados);
+        } else {
+            for (int i = 0; i < numeros.length; i++) {
+                System.out.print(numeros[i] + "  " );
+            }
+
+            System.out.println("| " + resultados);
+        }
+
+    }
+
+    public static boolean tudoUm(int[] numeros) {
+        boolean tudoUm = true;
+        
+        for (int i = 0; i < numeros.length; i++) {
+            if (numeros[i] != 1) {
+                tudoUm = false;
+            }
+        }
+
+        return tudoUm;
+    }
+
+}
